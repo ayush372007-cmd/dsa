@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 
-vector <vector<int>> sum_3(vector <int> &nums){
-    sort(nums.begin(),nums.end());
+vector <vector<int>> bettersum_3(vector <int> &nums){
+    
     int size = nums.size();
     
     set<vector<int>> st;
@@ -27,6 +27,37 @@ vector <vector<int>> sum_3(vector <int> &nums){
 
 }
 
+vector<vector<int>> optsum_3(vector<int> &nums){
+    sort(nums.begin(),nums.end());
+    vector<vector<int>>lol;
+    for(int i = 0; i < nums.size();i++){
+        if(i>0 && nums[i-1] == nums[i])continue;
+        
+        int j = i+1;
+        int k = nums.size() - 1;
+        
+        while(j < k ){
+            
+            int sum = nums[i] + nums[j] + nums[k];
+            if (sum < 0) j++;
+            else if (sum > 0) k--;
+            else{
+                
+                lol.push_back({nums[i],nums[j],nums[k]});
+                while(j<nums.size()-1 && nums[j] == nums[j+1]){
+                    j++;}
+                j++;
+                k--;
+                
+                }
+            
+
+            }
+            
+    }
+    
+    return lol ;
+}
 
 int main(){
     int size;
@@ -38,7 +69,7 @@ int main(){
         nums.push_back(x);
     }
 
-    vector<vector<int>> result = sum_3(nums);
+    vector<vector<int>> result = optsum_3(nums);
 
     for (const auto& triplet : result){
         for (int val : triplet){
